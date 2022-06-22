@@ -30,26 +30,22 @@ const usersHTML = `<html>
 </html>
 `;
 const requestListener = (req, res) => {
-  switch (req.url) {
-    case '/':
-      res.write(indexHTML);
-      res.end();
-      break;
-    case '/users':
-      res.write(usersHTML);
-      res.end();
-      break;
-    case '/create-user':
-      const body = [];
-      req.on('data', (chunk) => body.push(chunk));
-      req.on('end', () => {
-        console.log(Buffer.concat(body).toString().split('=')[1]);
-        res.statusCode = 302;  // redirect
-        res.setHeader('Location', '/');
-        res.end();
-      });
-      break;
+  if (req.url === '/') {
+    res.write(indexHTML);
+  } else if (req.url === '/users') {
+    res.write(usersHTML);
+  } else if (req.url === '/create-user' && req.method === 'POST') {
+    const body = [];
+    req.on('data', (chunk) => body.push(chunk));
+    req.on('end', () => {
+      console.log(Buffer.concat(body).toString().split('=')[1]);
+    });
+    res.statusCode = 302;  // redirect
+    res.setHeader('Location', '/');
+  } else {
+    res.write('404 PAGE NOT FOUND');
   }
+  res.end();
 }
 const server = http.createServer(requestListener);
 server.listen(3000);
