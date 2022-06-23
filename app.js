@@ -1,20 +1,22 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 
-app.use('/', (req, res, next) => {
-  console.log('common to every paths');
-  next();
-})
-app.use('/abc', (req, res, next) => {
-  console.log('path to /abc');
-  res.send('abc');
+// parse body
+app.use(bodyParser.urlencoded({extended: false}));
+
+app.use('/add-product', (_, res) => {
+  res.send('<form action="/product", method="POST">' +
+           '<input type="text" name="title" />' + 
+           '<button type="submit">Add Product</button></form>');
 });
-app.use('/def', (req, res, next) => {
-  console.log('path to /');
-  res.send('<h1>Hello from Express.js</h1>');
+app.post('/product', (req, res) => {
+  console.log(req.body);
+  res.redirect('/');
+});
+app.use('/', (req, res, next) => {
+  res.send('index');
 });
 
-// const server = http.createServer(app);
-// server.listen(3000);
 app.listen(3000);
