@@ -9,7 +9,7 @@ const shopRoutes = require('./routes/shop');
 // parse body
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.use(adminRoutes);
+app.use('/admin', adminRoutes);  // common path filter
 app.use(shopRoutes);
 
 // 404 page not found
