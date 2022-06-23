@@ -10,6 +10,7 @@ const shopRoutes = require('./routes/shop');
 
 // parse body
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.static(path.join(rootDir, 'public')));
 
 app.use('/admin', adminRoutes);  // common path filter
 app.use(shopRoutes);
