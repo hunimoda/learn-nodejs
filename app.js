@@ -5,14 +5,14 @@ const rootDir = require('./util/path');
 
 const app = express();
 
-const adminRoutes = require('./routes/admin');
+const admin = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
 // parse body
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(rootDir, 'public')));
 
-app.use('/admin', adminRoutes);  // common path filter
+app.use('/admin', admin.routes);  // common path filter
 app.use(shopRoutes);
 
 // 404 page not found
