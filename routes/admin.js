@@ -9,7 +9,8 @@ const products = [];
 // /admin/add-product GET
 router.get('/add-product', (_, res) => {
   res.render('add-product', {
-    pageTitle: 'Add Product', path: '/admin/add-product'
+    pageTitle: 'Add Product', path: '/admin/add-product', formsCSS: true,
+    productCSS: true, activeAddProduct: true
   });
 });
 // /admin/add-product POST
